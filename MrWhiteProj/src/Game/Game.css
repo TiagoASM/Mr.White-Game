@@ -1,0 +1,54 @@
+.Game-Container {
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.Eliminate-Button {
+  width: 100%;
+  padding: 14px;
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  transition: background-color 0.3s ease;
+}
+
+.Eliminate-Button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.Cards-Wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.Player-Cards {
+  background-color: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 18px;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* sombra suave */
+  color: #333;
+  margin: 10px;
+}
+
+.Player-Cards:hover {
+  cursor: pointer;
+  transform: scale(1.02);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+}
+
+.Player-Cards.selected {
+  border: 2px solid #007bff;
+  background-color: #e7f1ff;
+  box-shadow: 0 6px 14px rgba(0, 123, 255, 0.3); /* sombra azul mais forte */
+}

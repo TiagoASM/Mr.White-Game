@@ -16,56 +16,36 @@ function Home({playerList, setPlayerList, setGameValue ,gameValue}) {
   const [selectedPlayerName, setSelectedPlayerName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [wordUnderCover, setWordUnderCover] = useState("");
-  const OPENAI_KEY = import.meta.env.VITE_OPENAI_KEY;
 
 
 
   const wordApi = async () => {
     setIsLoading(true);
-    console.log(OPENAI_KEY);
-    try{
-      const messages = [
-        { role: "system", content: "Devolve só JSON válido. Nada antes nem depois." },
-        {
-          role: "user",
-          content:
-            "Gera 2 palavras em PT, relacionadas mas não óbvias ex: '(civil:lua, undercover:sol', 'civil:piscina, undercover:praia'). JSON: {'civil':'...','undercover':'...'}"
-        }
-      ];
-
-      const response = await fetch("https://api.openai.com/v1/chat/completions", {
-        method:"POST", 
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${OPENAI_KEY}`
-        },
-        body: JSON.stringify({
-          model: "gpt-5-mini",
-          messages,
-        })
+  
+    try {
+      const response = await fetch("/api/words", {
+        method: "POST"
       });
-
-      if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(errText);
-      }
+  
+      if (!response.ok) throw new Error("Erro a gerar palavras");
   
       const data = await response.json();
-      const content = data?.choices?.[0]?.message?.content;
   
+      const content = data.choices[0].message.content;
       const parsed = JSON.parse(content);
+  
       setWord(parsed.civil);
       setWordUnderCover(parsed.undercover);
-      console.log(parsed.civil);
-      console.log(parsed.undercover);
-      return parsed; 
-    }catch (error) {
+  
+      return parsed;
+    } catch (error) {
       console.error("Erro OpenAI:", error);
       return null;
-    }finally{
+    } finally {
       setIsLoading(false);
     }
   };
+  
 
   const ranOnce = useRef(false);
 
